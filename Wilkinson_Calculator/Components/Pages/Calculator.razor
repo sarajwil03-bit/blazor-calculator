@@ -1,0 +1,173 @@
+﻿@page "/calculator"
+@rendermode InteractiveServer /*any action we do will interact with the server*/
+@using System.Text.RegularExpressions
+
+<h3>Calculator</h3>
+
+<div class="calc-shell">
+    <div class="calc-card">
+    @* This division is for the main display of the calculation being done*@
+    <div class="display-row">
+
+        <input class="display"
+            aria-label="Calculator Display"
+            @bind="_displayText"/>
+    </div>
+    @* This division is for the button input*@
+    <div class="btn-grid">
+            <button class="btn func wide" @onclick="()=>ClearDisplay()">C</button>
+            <button class="btn func" @onclick="()=>Backspace()">Erase</button>
+            <button class="btn op" @onclick="()=> PressOp('/')">/</button>
+            <button class="btn" @onclick="()=> PressSeven()">7</button>
+            <button class="btn" @onclick="()=> PressEight() ">8</button>
+            <button class="btn" @onclick="()=> PressNine()">9</button>
+            <button class="btn op" @onclick="()=> PressOp('*')">*</button>
+            <button class="btn" @onclick="()=> PressFour()">4</button>
+            <button class="btn" @onclick="()=> PressFive()">5</button>
+            <button class="btn" @onclick="()=> PressSix()">6</button>
+            <button class="btn op" @onclick="()=> PressOp('+')">+</button>
+            <button class="btn" @onclick="()=> PressOne()">1</button>
+            <button class="btn" @onclick="()=> PressTwo()">2</button>
+            <button class="btn" @onclick="()=> PressThree()">3</button>
+            <button class="btn op" @onclick="()=> PressOp('-')">-</button>
+            <button class="btn wide" @onclick="()=> PressZero()">0</button>
+            <button class="btn" @onclick="()=> PressDecimal()">.</button>
+            <button class="btn equals" @onclick="()=> PressOp('=')">=</button>
+       </div>
+    </div>
+</div>
+
+@code {
+
+    private string _displayText = string.Empty;
+    private void PressZero()
+    {
+        _displayText += "0";
+    }
+    private void PressOne()
+    {
+        _displayText += "1";
+
+    }
+    private void PressTwo()
+    {
+        _displayText += "2";
+
+    }
+    private void PressThree()
+    {
+        _displayText += "3";
+
+    }
+    private void PressFour()
+    {
+        _displayText += "4";
+
+    }
+    private void PressFive()
+    {
+        _displayText += "5";
+
+    }
+    private void PressSix()
+    {
+        _displayText += "6";
+
+    }
+    private void PressSeven()
+    {
+        _displayText += "7";
+
+    }
+    private void PressEight()
+    {
+        _displayText += "8";
+
+    }
+    private void PressNine()
+    {
+        _displayText += "9";
+
+    }
+    private void PressDecimal()
+    {
+        _displayText += ".";
+    }
+    private void ClearDisplay() 
+    {
+        _displayText = string.Empty;
+    }
+    private void Backspace()
+    {
+        if(_displayText.Length==0)
+        {
+            return; /*don't do anything if there is more than one character*/
+        }
+        _displayText = _displayText.Substring(0, _displayText.Length - 1);
+    }
+
+    private void PressOp(char op)
+    {
+        if(op=='-')
+        {
+            _displayText += "-";
+        }
+        else if (op == '+')
+        {
+            _displayText += "+";
+        }
+        else if (op == '/')
+        {
+            _displayText += "/";
+        }
+        else if (op == '*')
+        {
+            _displayText += "*";
+        }
+        if(op == '=')
+        {
+            _displayText= Calculator.EqualSign(_displayText);
+        }
+    }
+    private static string EqualSign(string _displayText)
+    {
+        double calculation=0; /*incase there is a decimal being inputted, go ahead and set the calculation and final answer*/
+        double finalResult=0;
+        string[] calculatorInput = new string[] { _displayText }; /*put the input into an array so we can iterate through it*/
+        calculatorInput = Regex.Split(_displayText, @"([+\-*/])"); /*split it based on the operators*/
+
+        for (int i = calculatorInput.Length - 2; i > 0 ; i -= 2) /*to mimic a calculator's order of executing input, we start at the end of the string instead of the front*/
+        {
+
+            if (calculatorInput[i].Contains("+"))
+            {
+                calculation = double.Parse(calculatorInput[i - 1]) + double.Parse(calculatorInput[i + 1]); 
+                calculatorInput[i - 1] = calculation.ToString(); /*set the next operand to the result of the first expression being done to continue the calculation */
+            }
+            else if (calculatorInput[i].Contains("-"))
+            {
+                calculation = double.Parse(calculatorInput[i - 1]) - double.Parse(calculatorInput[i + 1]);
+                calculatorInput[i - 1] = calculation.ToString();
+
+            }
+            else if (calculatorInput[i].Contains("/"))
+            {
+                calculation = double.Parse(calculatorInput[i - 1]) / double.Parse(calculatorInput[i + 1]);
+                calculatorInput[i - 1] = calculation.ToString();
+
+            }
+            if (calculatorInput[i].Contains("*"))
+            {
+                calculation = double.Parse(calculatorInput[i - 1]) * double.Parse(calculatorInput[i + 1]);
+                calculatorInput[i - 1] = calculation.ToString();
+
+            }
+
+            finalResult = double.Parse(calculatorInput[i - 1]);
+            
+        }
+        _displayText = finalResult.ToString();
+        return _displayText;
+
+    }
+}

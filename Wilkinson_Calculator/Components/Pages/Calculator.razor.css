@@ -1,0 +1,82 @@
+﻿
+/*this is what changes the visuals and fuction of the calculator*/
+
+.calc-shell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+.calc-card {
+    background: rgb(45, 60, 126, 0.85);
+    width: 320px;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 6px 6px 18px rgba(22,22,35,0.08), -6px -6px 18px rgba(255,255,255,0.9);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    outline: none;
+}
+
+.btn-grid{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+}
+.btn {
+    border: none;
+    padding: 14px 0;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    cursor: pointer;
+    /*box-shadow: 3px 3px 8px rgba(18,18,30,0.06), -3px -3px 8px rgba(255,255,255,0.6);*/
+    background: linear-gradient(180deg, #ffffff, #f3f4f8);
+    transition: transform 120ms ease, box-shadow 120ms ease;
+    user-select: none;
+}
+.btn:active{
+    transform: translateY(2px);
+}
+.func{
+    font-weight: 600;
+}
+.op{
+    background: linear-gradient(180deg, #ffefef, #ffece6);
+    font-weight: 700;
+}
+/*Display*/
+.display-row{
+    display: flex;
+    justify-content: flex-end;
+}
+/*this is the main calculator input display*/
+.display{
+    width: 100%;
+    background: #d0e4ff;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    text-align: right;
+    padding: 12px 14px;
+    border-radius: 10px;
+    box-shadow: inset 0 -4px 10px rgba(0,0,0,0.03);
+    font-weight:600;
+    color: #111;
+}
+.equals{
+    background: linear-gradient(180deg, #d0f0ff, #a6e6ff);
+    font-weight: 800;
+    grid-column: 4 / 5;
+    grid-row: 5 / 6;
+    border-radius: 10px;
+}
+.wide{
+    grid-column: 1 / 3; /*zero wide button takes two columns*/
+    border-radius: 10px;
+}
+.tall{
+    grid-row: 4 / span 2; /* plus button spans in two rows*/
+}
