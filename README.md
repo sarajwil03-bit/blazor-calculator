@@ -1,4 +1,4 @@
-# Wilkinson_Calculator
+# Web-Based Calculator
 An interactive calculator developed with Blazor and C# language that supports multiple operations and provides a clean, user-friendly interface. 
 
 ##Features:
