@@ -23,3 +23,4 @@ and logic based, while CSS is used to create the responsive and intuitive interf
 -Structuring front-end components for scalability
 
 #screenshots:
+![Homepage](screenshots/calculator-ss.png)
